@@ -21,7 +21,7 @@ const MobileNavigation = () => {
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-crypto-card-dark border-t border-white/10 z-10">
       <div className="flex justify-between items-center px-2">
-        {navItems.map((item, index) => (
+        {navItems.map((item) => (
           <Link
             key={item.path}
             to={item.path}
