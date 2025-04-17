@@ -27,6 +27,13 @@ style.textContent = `
     50% { opacity: 0.8; }
   }
   
+  @keyframes float-particle {
+    0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { transform: translateY(-100px) translateX(100px); opacity: 0; }
+  }
+  
   .animate-float {
     animation: float 6s ease-in-out infinite;
   }

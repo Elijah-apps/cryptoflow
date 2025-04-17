@@ -16,11 +16,12 @@ const SplashScreen = () => {
   }, [navigate]);
 
   return (
-    <div className="h-screen w-full bg-gradient-to-br from-crypto-bg-dark to-[#1a103d] flex flex-col items-center justify-center overflow-hidden">
+    <div className="fixed inset-0 h-screen w-full bg-gradient-to-br from-crypto-bg-dark to-[#1a103d] flex flex-col items-center justify-center overflow-hidden">
       <div className="relative">
         {/* Animated circles in background */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-crypto-accent-blue/10 rounded-full animate-ping-slow"></div>
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-crypto-accent-blue/5 rounded-full animate-ping-slower"></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-crypto-accent-blue/2 rounded-full animate-ping-slower" style={{ animationDelay: "0.5s" }}></div>
         
         {/* Main logo and content */}
         <div className="relative z-10 flex flex-col items-center animate-float">
@@ -37,6 +38,25 @@ const SplashScreen = () => {
       <div className="absolute bottom-16 flex flex-col items-center">
         <div className="w-10 h-1 bg-crypto-accent-blue/50 rounded-full mb-4 animate-pulse"></div>
         <p className="text-gray-400 animate-pulse">Loading your secure wallet...</p>
+      </div>
+      
+      {/* Particle effect in the background */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {Array.from({ length: 20 }).map((_, i) => (
+          <div 
+            key={i}
+            className="absolute rounded-full bg-white/5"
+            style={{
+              width: `${Math.random() * 6 + 2}px`,
+              height: `${Math.random() * 6 + 2}px`,
+              top: `${Math.random() * 100}%`,
+              left: `${Math.random() * 100}%`,
+              animationDuration: `${Math.random() * 10 + 10}s`,
+              animationDelay: `${Math.random() * 5}s`,
+              animation: `float-particle ${Math.random() * 10 + 15}s linear infinite`
+            }}
+          />
+        ))}
       </div>
     </div>
   );

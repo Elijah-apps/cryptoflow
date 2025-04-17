@@ -10,11 +10,11 @@ const AppLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-crypto-bg-dark text-white flex">
+    <div className="min-h-screen h-screen flex bg-crypto-bg-dark text-white">
       {!isMobile && <Sidebar />}
       
       <main className="flex-1 overflow-auto">
-        <div className="container px-4 py-6 max-w-6xl mx-auto">
+        <div className="h-full container px-4 py-6 max-w-6xl mx-auto">
           <Outlet />
         </div>
       </main>

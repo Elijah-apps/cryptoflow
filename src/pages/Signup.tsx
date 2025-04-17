@@ -13,6 +13,7 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSignup = (e: React.FormEvent) => {
@@ -29,13 +30,37 @@ const Signup = () => {
     }
     
     // This is a mock signup - in a real app this would create an account
-    toast.success("Account created successfully!");
-    navigate("/login");
+    setIsLoading(true);
+    // Simulate network request
+    setTimeout(() => {
+      setIsLoading(false);
+      toast.success("Account created successfully!");
+      navigate("/login");
+    }, 1000);
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-crypto-bg-dark to-[#1a103d] text-white flex flex-col justify-center p-6">
-      <div className="max-w-md w-full mx-auto animate-fade-in">
+    <div className="fixed inset-0 min-h-screen bg-gradient-to-br from-crypto-bg-dark to-[#1a103d] text-white flex flex-col justify-center p-6">
+      {/* Particle effect in the background */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {Array.from({ length: 15 }).map((_, i) => (
+          <div 
+            key={i}
+            className="absolute rounded-full bg-white/5"
+            style={{
+              width: `${Math.random() * 6 + 2}px`,
+              height: `${Math.random() * 6 + 2}px`,
+              top: `${Math.random() * 100}%`,
+              left: `${Math.random() * 100}%`,
+              animationDuration: `${Math.random() * 10 + 10}s`,
+              animationDelay: `${Math.random() * 5}s`,
+              animation: `float-particle ${Math.random() * 10 + 15}s linear infinite`
+            }}
+          />
+        ))}
+      </div>
+      
+      <div className="max-w-md w-full mx-auto animate-fade-in z-10">
         <div className="text-center mb-8">
           <div className="flex justify-center">
             <div className="bg-crypto-card-dark p-4 rounded-full shadow-glow mb-4">
@@ -119,8 +144,12 @@ const Signup = () => {
               </div>
             </div>
 
-            <Button type="submit" className="w-full bg-gradient-to-r from-crypto-blue to-purple-600 hover:from-crypto-blue/90 hover:to-purple-600/90 transition-all duration-300 mt-2">
-              Create account
+            <Button 
+              type="submit" 
+              className="w-full bg-gradient-to-r from-crypto-blue to-purple-600 hover:from-crypto-blue/90 hover:to-purple-600/90 transition-all duration-300 mt-2"
+              disabled={isLoading}
+            >
+              {isLoading ? "Creating account..." : "Create account"}
             </Button>
           </form>
 
