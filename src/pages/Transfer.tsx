@@ -5,12 +5,12 @@ import TransferForm from "@/components/transfers/TransferForm";
 import ReceiveForm from "@/components/transfers/ReceiveForm";
 import { useLocation } from "react-router-dom";
 import TransferBottomSheet from "@/components/transfers/TransferBottomSheet";
-import { useMediaQuery } from "@/hooks/use-mobile";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const Transfer = () => {
   const [activeTab, setActiveTab] = useState<string>("send");
   const location = useLocation();
-  const isMobile = useMediaQuery("(max-width: 768px)");
+  const isMobile = useIsMobile();
   
   // Check if there's a tab parameter in the URL
   useEffect(() => {
