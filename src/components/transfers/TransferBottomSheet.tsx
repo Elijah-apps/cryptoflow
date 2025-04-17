@@ -3,9 +3,11 @@ import { useState } from "react";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { ArrowDown, ArrowUp, X } from "lucide-react";
+import { ArrowDown, ArrowUp, X, ShoppingCart } from "lucide-react";
 import TransferForm from "./TransferForm";
 import ReceiveForm from "./ReceiveForm";
+import ServicesGrid from "../services/ServicesGrid";
+import { Link } from "react-router-dom";
 
 interface TransferBottomSheetProps {
   initialTab?: "send" | "receive";
@@ -66,6 +68,23 @@ const TransferBottomSheet = ({ initialTab = "send" }: TransferBottomSheetProps) 
               <ReceiveForm />
             </TabsContent>
           </Tabs>
+
+          <div className="mt-6 grid grid-cols-2 gap-4">
+            <Link to="/dashboard/p2p?tab=buy">
+              <Button className="w-full bg-crypto-purple hover:bg-crypto-purple/90 text-white">
+                <ShoppingCart size={16} className="mr-2" />
+                Buy
+              </Button>
+            </Link>
+            <Link to="/dashboard/p2p?tab=sell">
+              <Button className="w-full bg-crypto-blue hover:bg-crypto-blue/90 text-white">
+                <ShoppingCart size={16} className="mr-2" />
+                Sell
+              </Button>
+            </Link>
+          </div>
+
+          <ServicesGrid />
         </div>
       </DrawerContent>
     </Drawer>
