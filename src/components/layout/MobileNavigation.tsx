@@ -1,5 +1,5 @@
 
-import { Home, PieChart, Send, LayoutList, Settings, Repeat } from "lucide-react";
+import { Home, PieChart, Send, LayoutList, Settings, Grid } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import TransferBottomSheet from "@/components/transfers/TransferBottomSheet";
 
@@ -13,7 +13,7 @@ const MobileNavigation = () => {
   const navItems = [
     { icon: Home, label: "Home", path: "/dashboard" },
     { icon: PieChart, label: "Portfolio", path: "/dashboard/portfolio" },
-    { icon: Repeat, label: "P2P", path: "/dashboard/p2p" },
+    { icon: Grid, label: "Services", path: "/dashboard/services" },
     { icon: LayoutList, label: "Activities", path: "/dashboard/activities" },
     { icon: Settings, label: "Settings", path: "/dashboard/settings" },
   ];

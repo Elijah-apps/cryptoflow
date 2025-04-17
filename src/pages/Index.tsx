@@ -1,8 +1,8 @@
-
 import BalanceCard from "@/components/dashboard/BalanceCard";
 import AssetsList from "@/components/dashboard/AssetsList";
 import TransactionHistory from "@/components/dashboard/TransactionHistory";
 import CryptoChart from "@/components/crypto/CryptoChart";
+import ServicesGrid from "@/components/services/ServicesGrid";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { useUserProfile } from "@/hooks/useUserProfile";
@@ -70,6 +70,8 @@ const Index = () => {
           </Tabs>
         </div>
       </div>
+      
+      <ServicesGrid />
       
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <AssetsList />

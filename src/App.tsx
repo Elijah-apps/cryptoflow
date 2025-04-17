@@ -56,6 +56,10 @@ const App = () => (
             <Route path="settings" element={<Settings />} />
             <Route path="p2p" element={<P2P />} />
             <Route path="kyc" element={<KYC />} />
+            <Route path="services" element={<Services />} />
+            <Route path="services/airtime" element={<Airtime />} />
+            <Route path="services/data" element={<Data />} />
+            <Route path="services/electricity" element={<Electricity />} />
           </Route>
           
           {/* Fallback */}

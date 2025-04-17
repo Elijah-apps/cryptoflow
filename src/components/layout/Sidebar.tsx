@@ -1,5 +1,5 @@
 
-import { Home, PieChart, Send, LayoutList, Settings, Wallet, Repeat } from "lucide-react";
+import { Home, PieChart, Send, LayoutList, Settings, Wallet, Grid } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 
@@ -21,7 +21,7 @@ const Sidebar = () => {
   const navItems = [
     { icon: Home, label: "Home", path: "/dashboard" },
     { icon: PieChart, label: "Portfolio", path: "/dashboard/portfolio" },
-    { icon: Repeat, label: "P2P", path: "/dashboard/p2p" },
+    { icon: Grid, label: "Services", path: "/dashboard/services" },
     { icon: LayoutList, label: "Activities", path: "/dashboard/activities" },
     { icon: Send, label: "Send/Receive", path: "/dashboard/transfer" },
     { icon: Settings, label: "Settings", path: "/dashboard/settings" },
