@@ -1,10 +1,10 @@
-
 import { useState } from "react";
-import { Shield, User, Globe, Moon, Sun, Bell, Key, Eye, EyeOff } from "lucide-react";
+import { Shield, User, Globe, Moon, Sun, Bell, Key, Eye, Database } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import ApiSettings from "@/components/settings/ApiSettings";
 
 const Settings = () => {
   const [isDarkMode, setIsDarkMode] = useState(true);
@@ -38,6 +38,7 @@ const Settings = () => {
           <TabsTrigger value="general">General</TabsTrigger>
           <TabsTrigger value="security">Security</TabsTrigger>
           <TabsTrigger value="preferences">Preferences</TabsTrigger>
+          <TabsTrigger value="api">API</TabsTrigger>
         </TabsList>
         
         <TabsContent value="general">
@@ -274,6 +275,10 @@ const Settings = () => {
               </div>
             </div>
           </div>
+        </TabsContent>
+        
+        <TabsContent value="api">
+          <ApiSettings />
         </TabsContent>
       </Tabs>
     </div>
