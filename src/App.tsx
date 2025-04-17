@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Portfolio from "./pages/Portfolio";
 import Activities from "./pages/Activities";
@@ -24,9 +24,9 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      <Toaster />
-      <Sonner />
       <BrowserRouter>
+        <Toaster />
+        <Sonner />
         <Routes>
           {/* Auth Routes */}
           <Route path="/splash" element={<SplashScreen />} />
@@ -36,18 +36,17 @@ const App = () => (
           <Route path="/reset-password" element={<CreateNewPassword />} />
           
           {/* Protected Routes */}
-          <Route element={<AppLayout />}>
-            <Route path="/" element={<Index />} />
-            <Route path="/portfolio" element={<Portfolio />} />
-            <Route path="/activities" element={<Activities />} />
-            <Route path="/transfer" element={<Transfer />} />
-            <Route path="/settings" element={<Settings />} />
-            <Route path="/p2p" element={<P2P />} />
-            <Route path="/kyc" element={<KYC />} />
+          <Route path="/" element={<AppLayout />}>
+            <Route index element={<Index />} />
+            <Route path="portfolio" element={<Portfolio />} />
+            <Route path="activities" element={<Activities />} />
+            <Route path="transfer" element={<Transfer />} />
+            <Route path="settings" element={<Settings />} />
+            <Route path="p2p" element={<P2P />} />
+            <Route path="kyc" element={<KYC />} />
           </Route>
           
-          {/* Initial redirect and fallback */}
-          <Route path="/" element={<Navigate to="/splash" replace />} />
+          {/* Fallback */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
