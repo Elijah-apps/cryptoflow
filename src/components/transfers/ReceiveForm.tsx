@@ -1,13 +1,17 @@
 
 import { QrCode, Copy, Download } from "lucide-react";
 import { toast } from "sonner";
+import { useWalletAddress } from "@/hooks/useUserProfile";
+import { Button } from "@/components/ui/button";
 
 const ReceiveForm = () => {
-  const walletAddress = "0x1a2b3c4d5e6f7g8h9i0j1k2l3m4n5o6p7q8r9s0t";
+  const { data: walletAddress, isLoading } = useWalletAddress();
   
   const copyAddress = () => {
-    navigator.clipboard.writeText(walletAddress);
-    toast.success("Address copied to clipboard");
+    if (walletAddress) {
+      navigator.clipboard.writeText(walletAddress);
+      toast.success("Address copied to clipboard");
+    }
   };
   
   // QR code placeholder component
@@ -19,6 +23,19 @@ const ReceiveForm = () => {
       </div>
     </div>
   );
+  
+  const downloadQrCode = () => {
+    // In a real implementation, this would generate and download a QR code
+    toast.success("QR Code download started");
+  };
+  
+  if (isLoading) {
+    return (
+      <div className="glass-card rounded-xl p-6">
+        <p className="text-center py-10">Loading wallet address...</p>
+      </div>
+    );
+  }
   
   return (
     <div className="glass-card rounded-xl p-6">
@@ -44,20 +61,21 @@ const ReceiveForm = () => {
         </div>
         
         <div className="flex flex-col space-y-3">
-          <button
+          <Button
             className="py-3 px-6 bg-crypto-blue rounded-xl hover:bg-crypto-blue/90 transition-colors flex items-center justify-center"
             onClick={copyAddress}
           >
             <Copy size={16} className="mr-2" />
             Copy Address
-          </button>
+          </Button>
           
-          <button
+          <Button
             className="py-3 px-6 bg-crypto-purple rounded-xl hover:bg-crypto-purple/90 transition-colors flex items-center justify-center"
+            onClick={downloadQrCode}
           >
             <Download size={16} className="mr-2" />
             Download QR Code
-          </button>
+          </Button>
         </div>
       </div>
     </div>

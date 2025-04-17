@@ -1,56 +1,27 @@
 
 import { ArrowUpRight, ArrowDownLeft, Clock, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
-
-// Mock data for transactions
-const transactions = [
-  {
-    id: "tx1",
-    type: "receive",
-    amount: 0.05,
-    symbol: "BTC",
-    value: 968.55,
-    from: "0x8a1b...3f7d",
-    to: "You",
-    timestamp: "2h ago",
-    status: "completed"
-  },
-  {
-    id: "tx2",
-    type: "send",
-    amount: 0.75,
-    symbol: "ETH",
-    value: 994.50,
-    from: "You",
-    to: "0x3e7c...9a2b",
-    timestamp: "Yesterday",
-    status: "completed"
-  },
-  {
-    id: "tx3",
-    type: "receive",
-    amount: 5.5,
-    symbol: "SOL",
-    value: 201.68,
-    from: "0xf21a...7e9c",
-    to: "You",
-    timestamp: "Apr 15",
-    status: "completed"
-  },
-  {
-    id: "tx4",
-    type: "send",
-    amount: 0.01,
-    symbol: "BTC",
-    value: 193.85,
-    from: "You",
-    to: "0x6b9d...1c4e",
-    timestamp: "Apr 12",
-    status: "pending"
-  },
-];
+import { useTransactions } from "@/hooks/useTransactions";
 
 const TransactionHistory = () => {
+  const { data: transactions, isLoading, error } = useTransactions();
+  
+  if (isLoading) {
+    return (
+      <div className="glass-card rounded-xl p-4">
+        <p className="text-center py-10">Loading transactions...</p>
+      </div>
+    );
+  }
+  
+  if (error) {
+    return (
+      <div className="glass-card rounded-xl p-4">
+        <p className="text-center py-10 text-crypto-red">Failed to load transactions</p>
+      </div>
+    );
+  }
+  
   return (
     <div className="glass-card rounded-xl overflow-hidden">
       <div className="p-4 border-b border-white/10 flex justify-between items-center">
@@ -62,7 +33,7 @@ const TransactionHistory = () => {
       </div>
       
       <div className="divide-y divide-white/10">
-        {transactions.map((tx) => (
+        {transactions && transactions.map((tx) => (
           <div key={tx.id} className="p-4 hover:bg-white/5 transition-colors">
             <div className="flex items-center">
               <div className={`w-10 h-10 mr-3 rounded-full flex items-center justify-center ${
@@ -102,7 +73,8 @@ const TransactionHistory = () => {
                   
                   <div className={`crypto-tag ${
                     tx.status === "completed" ? "bg-crypto-green/10 text-crypto-green" : 
-                    "bg-yellow-500/10 text-yellow-500"
+                    tx.status === "pending" ? "bg-yellow-500/10 text-yellow-500" :
+                    "bg-crypto-red/10 text-crypto-red"
                   }`}>
                     {tx.status}
                   </div>

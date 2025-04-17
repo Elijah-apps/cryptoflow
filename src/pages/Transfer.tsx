@@ -1,10 +1,23 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import TransferForm from "@/components/transfers/TransferForm";
 import ReceiveForm from "@/components/transfers/ReceiveForm";
+import { useLocation } from "react-router-dom";
 
 const Transfer = () => {
+  const [activeTab, setActiveTab] = useState<string>("send");
+  const location = useLocation();
+  
+  // Check if there's a tab parameter in the URL
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const tabParam = queryParams.get("tab");
+    if (tabParam === "receive") {
+      setActiveTab("receive");
+    }
+  }, [location]);
+  
   return (
     <div className="space-y-6 pb-20 sm:pb-0">
       <div>
@@ -13,7 +26,7 @@ const Transfer = () => {
       </div>
       
       <div className="max-w-md mx-auto">
-        <Tabs defaultValue="send" className="w-full">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid w-full grid-cols-2 mb-6">
             <TabsTrigger value="send">Send</TabsTrigger>
             <TabsTrigger value="receive">Receive</TabsTrigger>

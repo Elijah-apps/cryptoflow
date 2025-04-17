@@ -2,80 +2,47 @@
 import { ArrowUpRight, ChevronRight, Copy, Plus, Wallet } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
+import { Link } from "react-router-dom";
 import { 
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
-
-// Define wallet types and their data
-const wallets = [
-  {
-    id: "btc",
-    name: "Bitcoin",
-    symbol: "BTC",
-    address: "0x1a2b...3c4d",
-    balance: 0.45,
-    value: 8723.42,
-    change: 1.2,
-    color: "#F7931A"
-  },
-  {
-    id: "eth",
-    name: "Ethereum",
-    symbol: "ETH",
-    address: "0x3e7c...9a2b",
-    balance: 2.35,
-    value: 3120.25,
-    change: -0.8,
-    color: "#627EEA"
-  },
-  {
-    id: "sol",
-    name: "Solana",
-    symbol: "SOL",
-    address: "0xf21a...7e9c",
-    balance: 15.75,
-    value: 577.01,
-    change: 3.5,
-    color: "#14F195"
-  },
-  {
-    id: "usdt",
-    name: "USDT",
-    symbol: "USDT",
-    address: "0x6b9d...1c4e",
-    balance: 1250.50,
-    value: 1250.50,
-    change: 0.0,
-    color: "#26A17B"
-  },
-];
+import { useAssets } from "@/hooks/useAssets";
+import { useUserProfile } from "@/hooks/useUserProfile";
 
 const BalanceCard = () => {
+  const { data: assets, isLoading: assetsLoading } = useAssets();
+  const { data: userProfile, isLoading: profileLoading } = useUserProfile();
   const [showBalance, setShowBalance] = useState(true);
-  const [selectedWallet, setSelectedWallet] = useState(wallets[0]);
+  const [selectedWallet, setSelectedWallet] = useState<string>("bitcoin");
 
   const toggleBalance = () => {
     setShowBalance(!showBalance);
   };
 
   const copyAddress = () => {
-    navigator.clipboard.writeText(selectedWallet.address);
-    toast.success("Address copied to clipboard");
+    if (selectedAsset?.address) {
+      navigator.clipboard.writeText(selectedAsset.address);
+      toast.success("Address copied to clipboard");
+    }
   };
 
-  const totalBalance = wallets.reduce((total, wallet) => total + wallet.value, 0);
+  // Find the selected asset from the assets data
+  const selectedAsset = assets?.find(wallet => wallet.id === selectedWallet);
+  
+  // Calculate total balance from all assets
+  const totalBalance = assets?.reduce((total, wallet) => total + wallet.value, 0) || 0;
 
   // Function to render wallet icon based on wallet type
   const renderWalletIcon = (walletId: string) => {
     switch (walletId) {
-      case "btc":
+      case "bitcoin":
         return <Wallet className="w-full h-full text-[#F7931A]" />;
-      case "eth":
+      case "ethereum":
         return <Wallet className="w-full h-full text-[#627EEA]" />;
-      case "sol":
+      case "solana":
         return <Wallet className="w-full h-full text-[#14F195]" />;
       case "usdt":
         return <Wallet className="w-full h-full text-[#26A17B]" />;
@@ -83,6 +50,16 @@ const BalanceCard = () => {
         return <Wallet className="w-full h-full" />;
     }
   };
+
+  if (assetsLoading || profileLoading) {
+    return (
+      <div className="wallet-card relative overflow-hidden">
+        <div className="p-6">
+          <p className="text-center py-10">Loading wallet data...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="wallet-card relative overflow-hidden">
@@ -133,7 +110,7 @@ const BalanceCard = () => {
             <div className="flex items-center mt-1">
               <span className="text-crypto-green flex items-center text-xs font-medium">
                 <ArrowUpRight size={14} className="mr-1" />
-                +2.4%
+                {userProfile?.changePercentage ? `+${userProfile.changePercentage}%` : '+0.0%'}
               </span>
               <span className="text-xs text-gray-400 ml-2">24h change</span>
             </div>
@@ -144,16 +121,16 @@ const BalanceCard = () => {
               <DropdownMenuTrigger className="hover:bg-white/10 rounded-full p-1">
                 <div className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center">
                   <div className="w-6 h-6">
-                    {renderWalletIcon(selectedWallet.id)}
+                    {selectedAsset && renderWalletIcon(selectedAsset.id)}
                   </div>
                 </div>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="bg-crypto-card-dark border-white/10">
-                {wallets.map((wallet) => (
+                {assets && assets.map((wallet) => (
                   <DropdownMenuItem
                     key={wallet.id}
-                    onClick={() => setSelectedWallet(wallet)}
-                    className={`flex items-center space-x-2 cursor-pointer ${selectedWallet.id === wallet.id ? 'bg-white/10' : ''}`}
+                    onClick={() => setSelectedWallet(wallet.id)}
+                    className={`flex items-center space-x-2 cursor-pointer ${selectedWallet === wallet.id ? 'bg-white/10' : ''}`}
                   >
                     <div className="w-5 h-5">
                       {renderWalletIcon(wallet.id)}
@@ -166,44 +143,48 @@ const BalanceCard = () => {
           </div>
         </div>
         
-        <div className="mt-4 flex items-center justify-between">
-          <h3 className="text-lg font-semibold flex items-center">
-            <div className="w-5 h-5 mr-2">
-              {renderWalletIcon(selectedWallet.id)}
+        {selectedAsset && (
+          <>
+            <div className="mt-4 flex items-center justify-between">
+              <h3 className="text-lg font-semibold flex items-center">
+                <div className="w-5 h-5 mr-2">
+                  {renderWalletIcon(selectedAsset.id)}
+                </div>
+                {selectedAsset.name} Wallet
+              </h3>
+              <div className="text-right">
+                <p className="text-lg font-medium">
+                  {showBalance ? `${selectedAsset.balance} ${selectedAsset.symbol}` : "••••••••"}
+                </p>
+                <p className="text-sm text-gray-400">
+                  {showBalance ? `$${selectedAsset.value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : "••••••••"}
+                </p>
+              </div>
             </div>
-            {selectedWallet.name} Wallet
-          </h3>
-          <div className="text-right">
-            <p className="text-lg font-medium">
-              {showBalance ? `${selectedWallet.balance} ${selectedWallet.symbol}` : "••••••••"}
-            </p>
-            <p className="text-sm text-gray-400">
-              {showBalance ? `$${selectedWallet.value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : "••••••••"}
-            </p>
-          </div>
-        </div>
-        
-        <div className="mt-6">
-          <div className="flex justify-between items-center">
-            <p className="text-sm text-gray-300">Wallet Address</p>
-            <button 
-              onClick={copyAddress}
-              className="text-xs flex items-center text-crypto-accent-blue"
-            >
-              <Copy size={12} className="mr-1" />
-              Copy
-            </button>
-          </div>
-          <p className="text-sm font-mono mt-1">{selectedWallet.address}</p>
-        </div>
+            
+            <div className="mt-6">
+              <div className="flex justify-between items-center">
+                <p className="text-sm text-gray-300">Wallet Address</p>
+                <button 
+                  onClick={copyAddress}
+                  className="text-xs flex items-center text-crypto-accent-blue"
+                >
+                  <Copy size={12} className="mr-1" />
+                  Copy
+                </button>
+              </div>
+              <p className="text-sm font-mono mt-1">{selectedAsset.address}</p>
+            </div>
+          </>
+        )}
         
         <div className="mt-6 flex space-x-2">
-          <button className="action-button flex-1 bg-crypto-blue">
+          <Link to="/transfer" className="action-button flex-1 bg-crypto-blue">
             Send
-          </button>
-          <button className="action-button flex-1 bg-crypto-purple">
+          </Link>
+          <Link to="/transfer?tab=receive" className="action-button flex-1 bg-crypto-purple">
             Receive
-          </button>
+          </Link>
         </div>
       </div>
     </div>

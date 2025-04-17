@@ -5,8 +5,14 @@ import TransactionHistory from "@/components/dashboard/TransactionHistory";
 import CryptoChart from "@/components/crypto/CryptoChart";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
+import { useUserProfile } from "@/hooks/useUserProfile";
 
 const Index = () => {
+  const { data: userProfile } = useUserProfile();
+  
+  const changePercentage = userProfile?.changePercentage || 0;
+  const isPositiveChange = changePercentage >= 0;
+  
   return (
     <div className="space-y-6 pb-20 sm:pb-0">
       <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
@@ -39,8 +45,13 @@ const Index = () => {
                 <TabsTrigger value="year">Year</TabsTrigger>
               </TabsList>
               
-              <Badge variant="outline" className="bg-crypto-green/10 text-crypto-green border-crypto-green/20">
-                +5.34%
+              <Badge 
+                variant="outline" 
+                className={`${isPositiveChange 
+                  ? 'bg-crypto-green/10 text-crypto-green border-crypto-green/20' 
+                  : 'bg-crypto-red/10 text-crypto-red border-crypto-red/20'}`}
+              >
+                {isPositiveChange ? '+' : ''}{changePercentage}%
               </Badge>
             </div>
             
