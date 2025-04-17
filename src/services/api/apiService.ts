@@ -63,6 +63,86 @@ class ApiService {
     await simulateDelay();
     return mockUserProfile.walletAddress;
   }
+  
+  // Authentication endpoints
+  async login(email: string, password: string): Promise<{ success: boolean; error?: string }> {
+    await simulateDelay(1000);
+    
+    // Mock login validation
+    if (!email || !password) {
+      return { success: false, error: "Email and password are required" };
+    }
+    
+    // In a real implementation, this would verify credentials
+    return { success: true };
+  }
+  
+  async signUp(name: string, email: string, password: string): Promise<{ success: boolean; error?: string }> {
+    await simulateDelay(1500);
+    
+    // Mock signup validation
+    if (!name || !email || !password) {
+      return { success: false, error: "All fields are required" };
+    }
+    
+    // In a real implementation, this would create a new user
+    return { success: true };
+  }
+  
+  async requestPasswordReset(email: string): Promise<{ success: boolean; error?: string }> {
+    await simulateDelay(1000);
+    
+    // Mock validation
+    if (!email) {
+      return { success: false, error: "Email is required" };
+    }
+    
+    // In a real implementation, this would send an OTP to the user's email
+    return { success: true };
+  }
+  
+  async verifyOTP(email: string, otp: string): Promise<{ success: boolean; error?: string }> {
+    await simulateDelay(1000);
+    
+    // Mock OTP validation
+    if (!email || !otp) {
+      return { success: false, error: "Email and OTP are required" };
+    }
+    
+    // In a real implementation, this would verify the OTP against the database
+    // For demo purposes, we'll accept "123456" as the valid OTP
+    if (otp === "123456") {
+      return { success: true };
+    }
+    
+    return { success: false, error: "Invalid OTP" };
+  }
+  
+  async resetPassword(email: string, newPassword: string): Promise<{ success: boolean; error?: string }> {
+    await simulateDelay(1000);
+    
+    // Mock validation
+    if (!email || !newPassword) {
+      return { success: false, error: "Email and new password are required" };
+    }
+    
+    // In a real implementation, this would update the user's password
+    return { success: true };
+  }
+  
+  async updateUsername(newUsername: string): Promise<{ success: boolean; error?: string }> {
+    await simulateDelay(1000);
+    
+    // Mock validation
+    if (!newUsername) {
+      return { success: false, error: "Username is required" };
+    }
+    
+    // In a real implementation, this would update the user's name in the database
+    mockUserProfile.username = newUsername;
+    
+    return { success: true };
+  }
 }
 
 // Export a singleton instance

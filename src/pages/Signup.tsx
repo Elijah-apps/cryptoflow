@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "@/components/ui/sonner";
+import { apiService } from "@/services/api/apiService";
 
 const Signup = () => {
   const [name, setName] = useState("");
@@ -16,7 +17,7 @@ const Signup = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleSignup = (e: React.FormEvent) => {
+  const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!name || !email || !password || !confirmPassword) {
@@ -29,14 +30,23 @@ const Signup = () => {
       return;
     }
     
-    // This is a mock signup - in a real app this would create an account
     setIsLoading(true);
-    // Simulate network request
-    setTimeout(() => {
+    
+    try {
+      const result = await apiService.signUp(name, email, password);
+      
+      if (result.success) {
+        toast.success("Account created successfully!");
+        navigate("/login");
+      } else {
+        toast.error(result.error || "Signup failed. Please try again.");
+      }
+    } catch (error) {
+      toast.error("An error occurred during signup");
+      console.error(error);
+    } finally {
       setIsLoading(false);
-      toast.success("Account created successfully!");
-      navigate("/login");
-    }, 1000);
+    }
   };
 
   return (
@@ -67,7 +77,7 @@ const Signup = () => {
               <Wallet className="w-14 h-14 text-crypto-accent-blue" />
             </div>
           </div>
-          <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-crypto-accent-blue to-purple-400">Create an account</h1>
+          <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-crypto-accent-blue to-purple-400">CreekChain</h1>
           <p className="text-gray-400 mt-2">Start your crypto journey today</p>
         </div>
 

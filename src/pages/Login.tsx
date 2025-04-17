@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "@/components/ui/sonner";
+import { apiService } from "@/services/api/apiService";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -14,20 +15,30 @@ const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // This is a mock login - in a real app this would verify credentials
-    if (email && password) {
-      setIsLoading(true);
-      // Simulate network request
-      setTimeout(() => {
-        setIsLoading(false);
+    if (!email || !password) {
+      toast.error("Please enter both email and password");
+      return;
+    }
+    
+    setIsLoading(true);
+    
+    try {
+      const result = await apiService.login(email, password);
+      
+      if (result.success) {
         toast.success("Logged in successfully!");
         navigate("/dashboard");
-      }, 1000);
-    } else {
-      toast.error("Please enter both email and password");
+      } else {
+        toast.error(result.error || "Login failed. Please try again.");
+      }
+    } catch (error) {
+      toast.error("An error occurred during login");
+      console.error(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -59,7 +70,7 @@ const Login = () => {
               <Wallet className="w-14 h-14 text-crypto-accent-blue" />
             </div>
           </div>
-          <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-crypto-accent-blue to-purple-400">Welcome back</h1>
+          <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-crypto-accent-blue to-purple-400">CreekChain</h1>
           <p className="text-gray-400 mt-2">Sign in to access your crypto wallet</p>
         </div>
 

@@ -4,10 +4,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import TransferForm from "@/components/transfers/TransferForm";
 import ReceiveForm from "@/components/transfers/ReceiveForm";
 import { useLocation } from "react-router-dom";
+import TransferBottomSheet from "@/components/transfers/TransferBottomSheet";
+import { useMediaQuery } from "@/hooks/use-mobile";
 
 const Transfer = () => {
   const [activeTab, setActiveTab] = useState<string>("send");
   const location = useLocation();
+  const isMobile = useMediaQuery("(max-width: 768px)");
   
   // Check if there's a tab parameter in the URL
   useEffect(() => {
@@ -17,6 +20,24 @@ const Transfer = () => {
       setActiveTab("receive");
     }
   }, [location]);
+  
+  if (isMobile) {
+    return (
+      <div className="space-y-6 pb-20 sm:pb-0">
+        <div>
+          <h1 className="text-2xl font-bold">Transfer</h1>
+          <p className="text-gray-400">Send and receive cryptocurrency</p>
+        </div>
+        
+        <div className="flex justify-center mt-8">
+          <div className="flex gap-4">
+            <TransferBottomSheet initialTab="send" />
+            <TransferBottomSheet initialTab="receive" />
+          </div>
+        </div>
+      </div>
+    );
+  }
   
   return (
     <div className="space-y-6 pb-20 sm:pb-0">
