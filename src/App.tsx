@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -16,6 +15,7 @@ import Services from "./pages/Services";
 import Airtime from "./pages/services/Airtime";
 import Data from "./pages/services/Data";
 import Electricity from "./pages/services/Electricity";
+import TV from "./pages/services/TV";
 import AppLayout from "./components/layout/AppLayout";
 import SplashScreen from "./pages/SplashScreen";
 import Login from "./pages/Login";
@@ -23,7 +23,6 @@ import Signup from "./pages/Signup";
 import ForgotPassword from "./pages/ForgotPassword";
 import CreateNewPassword from "./pages/CreateNewPassword";
 
-// Create a client with default configurations
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -41,17 +40,14 @@ const App = () => (
         <Toaster />
         <Sonner />
         <Routes>
-          {/* Start with splash screen */}
           <Route path="/" element={<Navigate to="/splash" replace />} />
           <Route path="/splash" element={<SplashScreen />} />
           
-          {/* Auth Routes */}
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password" element={<CreateNewPassword />} />
           
-          {/* Protected Routes */}
           <Route path="/dashboard" element={<AppLayout />}>
             <Route index element={<Index />} />
             <Route path="portfolio" element={<Portfolio />} />
@@ -64,9 +60,9 @@ const App = () => (
             <Route path="services/airtime" element={<Airtime />} />
             <Route path="services/data" element={<Data />} />
             <Route path="services/electricity" element={<Electricity />} />
+            <Route path="services/tv" element={<TV />} />
           </Route>
           
-          {/* Fallback */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

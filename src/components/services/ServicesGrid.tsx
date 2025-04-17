@@ -1,5 +1,5 @@
 
-import { Phone, Database, Zap } from "lucide-react";
+import { Phone, Database, Zap, Tv } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const ServicesGrid = () => {
@@ -21,6 +21,12 @@ const ServicesGrid = () => {
       name: "Electricity",
       path: "/dashboard/services/electricity",
       color: "bg-crypto-accent-blue",
+    },
+    {
+      icon: Tv,
+      name: "TV",
+      path: "/dashboard/services/tv",
+      color: "bg-crypto-pink",
     },
   ];
 

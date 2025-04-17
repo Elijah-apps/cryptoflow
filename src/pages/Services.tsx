@@ -1,7 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Phone, Database, Zap } from "lucide-react";
+import { Phone, Database, Zap, Tv } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Services = () => {
@@ -26,6 +26,13 @@ const Services = () => {
       description: "Pay electricity bills",
       path: "/dashboard/services/electricity",
       color: "bg-crypto-accent-blue",
+    },
+    {
+      icon: Tv,
+      name: "TV",
+      description: "Subscribe to TV packages",
+      path: "/dashboard/services/tv",
+      color: "bg-crypto-pink",
     },
   ];
 
