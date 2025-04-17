@@ -13,6 +13,7 @@ const assets = [
     value: 8723.42,
     change: 1.2,
     price: 19385.37,
+    walletType: "Bitcoin Wallet"
   },
   {
     id: "ethereum",
@@ -23,6 +24,7 @@ const assets = [
     value: 3120.25,
     change: -0.8,
     price: 1327.77,
+    walletType: "Ethereum Wallet"
   },
   {
     id: "solana",
@@ -33,6 +35,18 @@ const assets = [
     value: 577.01,
     change: 3.5,
     price: 36.63,
+    walletType: "Solana Wallet"
+  },
+  {
+    id: "usdt",
+    name: "USDT",
+    symbol: "USDT",
+    logo: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 2000 2000'%3E%3Cpath d='M1000,0c552.26,0,1000,447.74,1000,1000S1552.24,2000,1000,2000,0,1552.26,0,1000,447.78,0,1000,0' fill='%2326a17b'/%3E%3Cpath d='M1123.42,866.76V718H1463.6V491.34H537.28V718H877.5V866.64C601,879.34,393.1,934.1,393.1,999.7s208,120.36,484.4,133.14v476.5h246V1132.8c276-12.74,483.48-67.46,483.48-133s-207.48-120.26-483.48-133m0,225.64v-0.12c-6.94.44-42.6,2.58-122,2.58-63.48,0-108.14-1.8-123.88-2.62v0.2C633.34,1081.66,451,1039.12,451,988.22S633.36,894.84,877.62,884V1050.1c16,1.1,61.76,3.8,124.92,3.8,75.86,0,114-3.16,121-3.8V884c243.8,10.86,425.72,53.44,425.72,104.16s-182,93.32-425.72,104.18' fill='%23fff'/%3E%3C/svg%3E",
+    balance: 1250.50,
+    value: 1250.50,
+    change: 0.0,
+    price: 1.00,
+    walletType: "USDT Wallet"
   },
 ];
 
@@ -40,7 +54,7 @@ const AssetsList = () => {
   return (
     <div className="glass-card rounded-xl overflow-hidden">
       <div className="p-4 border-b border-white/10 flex justify-between items-center">
-        <h2 className="font-bold text-lg">My Assets</h2>
+        <h2 className="font-bold text-lg">My Wallets</h2>
         <Link to="/portfolio" className="text-crypto-accent-blue text-sm flex items-center">
           View All
           <ChevronRight size={16} />
@@ -60,22 +74,30 @@ const AssetsList = () => {
                   <div>
                     <h3 className="font-medium">{asset.name}</h3>
                     <div className="flex items-center text-sm text-gray-400">
-                      <span>{asset.symbol}</span>
-                      <span className="mx-2">•</span>
-                      <span>{asset.balance} {asset.symbol}</span>
+                      <span>{asset.walletType}</span>
                     </div>
                   </div>
                   
                   <div className="text-right">
-                    <p className="font-medium">${asset.value.toLocaleString()}</p>
-                    <p className={`text-sm flex items-center justify-end ${asset.change >= 0 ? 'text-crypto-green' : 'text-crypto-red'}`}>
-                      {asset.change >= 0 ? (
-                        <ArrowUpRight size={14} className="mr-1" />
-                      ) : (
-                        <ArrowDownRight size={14} className="mr-1" />
-                      )}
-                      {asset.change >= 0 ? '+' : ''}{asset.change}%
+                    <p className="font-medium">{asset.balance} {asset.symbol}</p>
+                    <p className="text-sm text-gray-400">
+                      ${asset.value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                     </p>
+                  </div>
+                </div>
+
+                <div className="flex justify-between mt-2">
+                  <div className="flex items-center text-xs text-gray-400">
+                    <span>${asset.price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                  </div>
+                  
+                  <div className={`text-xs flex items-center ${asset.change >= 0 ? 'text-crypto-green' : asset.change < 0 ? 'text-crypto-red' : 'text-gray-400'}`}>
+                    {asset.change > 0 ? (
+                      <ArrowUpRight size={14} className="mr-1" />
+                    ) : asset.change < 0 ? (
+                      <ArrowDownRight size={14} className="mr-1" />
+                    ) : null}
+                    {asset.change > 0 ? '+' : ''}{asset.change}%
                   </div>
                 </div>
               </div>
