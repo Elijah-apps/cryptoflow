@@ -10,6 +10,16 @@ const ReceiveForm = () => {
     toast.success("Address copied to clipboard");
   };
   
+  // QR code placeholder component
+  const QrCodePlaceholder = () => (
+    <div className="w-full h-full border-2 border-dashed border-gray-400 rounded flex items-center justify-center bg-gray-50">
+      <div className="text-xs text-gray-500 p-2 text-center">
+        <QrCode className="mx-auto mb-2 text-gray-400" size={24} />
+        QR Code for your wallet address
+      </div>
+    </div>
+  );
+  
   return (
     <div className="glass-card rounded-xl p-6">
       <h2 className="text-xl font-bold mb-6 flex items-center">
@@ -19,12 +29,7 @@ const ReceiveForm = () => {
       
       <div className="mx-auto text-center">
         <div className="relative mx-auto w-48 h-48 mb-6 bg-white p-2 rounded-lg">
-          {/* This is a placeholder for QR code - in a real app you'd use a QR library */}
-          <div className="w-full h-full border-2 border-dashed border-gray-400 rounded flex items-center justify-center bg-gray-50">
-            <div className="text-xs text-gray-500 p-2">
-              QR Code for your wallet address
-            </div>
-          </div>
+          <QrCodePlaceholder />
         </div>
         
         <p className="text-sm text-gray-400 mb-2">Your Wallet Address</p>
