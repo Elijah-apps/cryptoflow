@@ -14,7 +14,7 @@ import { Tv } from "lucide-react";
 
 const TV = () => {
   const [provider, setProvider] = useState("");
-  const [package, setPackage] = useState("");
+  const [tvPackage, setTvPackage] = useState("");
   const [smartcardNumber, setSmartcardNumber] = useState("");
 
   const providers = [
@@ -45,7 +45,7 @@ const TV = () => {
 
   const handleSubscribe = () => {
     // Handle subscription logic here
-    console.log("Subscribing with:", { provider, package: package, smartcardNumber });
+    console.log("Subscribing with:", { provider, tvPackage, smartcardNumber });
   };
 
   return (
@@ -75,7 +75,7 @@ const TV = () => {
 
           <div>
             <label className="text-sm text-gray-400">Select Package</label>
-            <Select value={package} onValueChange={setPackage}>
+            <Select value={tvPackage} onValueChange={setTvPackage}>
               <SelectTrigger className="w-full mt-1" disabled={!provider}>
                 <SelectValue placeholder="Select a package" />
               </SelectTrigger>
@@ -103,7 +103,7 @@ const TV = () => {
           <Button
             onClick={handleSubscribe}
             className="w-full"
-            disabled={!provider || !package || !smartcardNumber}
+            disabled={!provider || !tvPackage || !smartcardNumber}
           >
             <Tv className="mr-2" size={20} />
             Subscribe Now
