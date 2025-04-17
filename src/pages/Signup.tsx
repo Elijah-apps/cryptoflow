@@ -34,15 +34,19 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen bg-crypto-bg-dark text-white flex flex-col justify-center p-6">
-      <div className="max-w-md w-full mx-auto">
+    <div className="min-h-screen bg-gradient-to-br from-crypto-bg-dark to-[#1a103d] text-white flex flex-col justify-center p-6">
+      <div className="max-w-md w-full mx-auto animate-fade-in">
         <div className="text-center mb-8">
-          <Wallet className="w-16 h-16 text-crypto-accent-blue mx-auto mb-4" />
-          <h1 className="text-3xl font-bold crypto-gradient-text">Create an account</h1>
+          <div className="flex justify-center">
+            <div className="bg-crypto-card-dark p-4 rounded-full shadow-glow mb-4">
+              <Wallet className="w-14 h-14 text-crypto-accent-blue" />
+            </div>
+          </div>
+          <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-crypto-accent-blue to-purple-400">Create an account</h1>
           <p className="text-gray-400 mt-2">Start your crypto journey today</p>
         </div>
 
-        <div className="glass-card rounded-xl p-6">
+        <div className="glass-card rounded-xl p-6 backdrop-blur-sm bg-white/5 border border-white/10 shadow-xl">
           <form onSubmit={handleSignup} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="name">Full Name</Label>
@@ -54,7 +58,7 @@ const Signup = () => {
                   placeholder="John Doe"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="pl-10 bg-crypto-card-dark border-white/10 text-white"
+                  className="pl-10 bg-crypto-card-dark border-white/10 text-white focus:border-crypto-accent-blue focus:ring-crypto-accent-blue/20"
                 />
               </div>
             </div>
@@ -69,7 +73,7 @@ const Signup = () => {
                   placeholder="name@example.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="pl-10 bg-crypto-card-dark border-white/10 text-white"
+                  className="pl-10 bg-crypto-card-dark border-white/10 text-white focus:border-crypto-accent-blue focus:ring-crypto-accent-blue/20"
                 />
               </div>
             </div>
@@ -84,7 +88,7 @@ const Signup = () => {
                   placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="pl-10 bg-crypto-card-dark border-white/10 text-white"
+                  className="pl-10 bg-crypto-card-dark border-white/10 text-white focus:border-crypto-accent-blue focus:ring-crypto-accent-blue/20"
                 />
                 <button
                   type="button"
@@ -110,12 +114,12 @@ const Signup = () => {
                   placeholder="••••••••"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="pl-10 bg-crypto-card-dark border-white/10 text-white"
+                  className="pl-10 bg-crypto-card-dark border-white/10 text-white focus:border-crypto-accent-blue focus:ring-crypto-accent-blue/20"
                 />
               </div>
             </div>
 
-            <Button type="submit" className="w-full bg-crypto-blue hover:bg-crypto-blue/90">
+            <Button type="submit" className="w-full bg-gradient-to-r from-crypto-blue to-purple-600 hover:from-crypto-blue/90 hover:to-purple-600/90 transition-all duration-300 mt-2">
               Create account
             </Button>
           </form>
@@ -123,7 +127,7 @@ const Signup = () => {
           <div className="mt-6 text-center">
             <p className="text-gray-400">
               Already have an account?{" "}
-              <Link to="/login" className="text-crypto-accent-blue hover:underline">
+              <Link to="/login" className="text-crypto-accent-blue hover:text-crypto-accent-blue/80 transition-colors">
                 Sign in
               </Link>
             </p>

@@ -1,3 +1,4 @@
+
 import { Home, PieChart, Send, LayoutList, Settings, Repeat } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
@@ -5,15 +6,15 @@ const MobileNavigation = () => {
   const location = useLocation();
   
   const isActive = (path: string) => {
-    return location.pathname === path;
+    return location.pathname.includes(path);
   };
 
   const navItems = [
-    { icon: Home, label: "Home", path: "/" },
-    { icon: PieChart, label: "Portfolio", path: "/portfolio" },
-    { icon: Repeat, label: "P2P", path: "/p2p" },
-    { icon: Send, label: "Transfer", path: "/transfer" },
-    { icon: Settings, label: "Settings", path: "/settings" },
+    { icon: Home, label: "Home", path: "/dashboard" },
+    { icon: PieChart, label: "Portfolio", path: "/dashboard/portfolio" },
+    { icon: Repeat, label: "P2P", path: "/dashboard/p2p" },
+    { icon: Send, label: "Transfer", path: "/dashboard/transfer" },
+    { icon: Settings, label: "Settings", path: "/dashboard/settings" },
   ];
 
   return (

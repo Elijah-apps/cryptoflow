@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Index from "./pages/Index";
 import Portfolio from "./pages/Portfolio";
 import Activities from "./pages/Activities";
@@ -37,15 +37,18 @@ const App = () => (
         <Toaster />
         <Sonner />
         <Routes>
-          {/* Auth Routes */}
+          {/* Start with splash screen */}
+          <Route path="/" element={<Navigate to="/splash" replace />} />
           <Route path="/splash" element={<SplashScreen />} />
+          
+          {/* Auth Routes */}
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password" element={<CreateNewPassword />} />
           
           {/* Protected Routes */}
-          <Route path="/" element={<AppLayout />}>
+          <Route path="/dashboard" element={<AppLayout />}>
             <Route index element={<Index />} />
             <Route path="portfolio" element={<Portfolio />} />
             <Route path="activities" element={<Activities />} />
