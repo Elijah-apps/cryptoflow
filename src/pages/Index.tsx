@@ -1,11 +1,68 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import BalanceCard from "@/components/dashboard/BalanceCard";
+import AssetsList from "@/components/dashboard/AssetsList";
+import TransactionHistory from "@/components/dashboard/TransactionHistory";
+import CryptoChart from "@/components/crypto/CryptoChart";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Badge } from "@/components/ui/badge";
 
 const Index = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
+    <div className="space-y-6 pb-20 sm:pb-0">
+      <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
+        <div>
+          <h1 className="text-2xl font-bold">Dashboard</h1>
+          <p className="text-gray-400">Welcome back to your crypto wallet</p>
+        </div>
+        
+        <div className="flex items-center">
+          <div className="glass-card px-3 py-1.5 rounded-lg flex items-center">
+            <div className="w-2 h-2 rounded-full bg-crypto-green animate-pulse mr-2"></div>
+            <span className="text-sm font-medium">Network: Mainnet</span>
+          </div>
+        </div>
+      </div>
+      
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="lg:col-span-2">
+          <BalanceCard />
+        </div>
+        
+        <div className="glass-card rounded-xl p-4">
+          <h2 className="font-bold mb-2">Portfolio Growth</h2>
+          <Tabs defaultValue="week" className="w-full">
+            <div className="flex justify-between items-center mb-4">
+              <TabsList className="bg-crypto-card-dark">
+                <TabsTrigger value="day">Day</TabsTrigger>
+                <TabsTrigger value="week">Week</TabsTrigger>
+                <TabsTrigger value="month">Month</TabsTrigger>
+                <TabsTrigger value="year">Year</TabsTrigger>
+              </TabsList>
+              
+              <Badge variant="outline" className="bg-crypto-green/10 text-crypto-green border-crypto-green/20">
+                +5.34%
+              </Badge>
+            </div>
+            
+            <TabsContent value="day">
+              <CryptoChart trend="volatile" color="#14B8A6" />
+            </TabsContent>
+            <TabsContent value="week">
+              <CryptoChart trend="up" color="#3B82F6" />
+            </TabsContent>
+            <TabsContent value="month">
+              <CryptoChart trend="up" color="#8B5CF6" />
+            </TabsContent>
+            <TabsContent value="year">
+              <CryptoChart trend="up" color="#EC4899" />
+            </TabsContent>
+          </Tabs>
+        </div>
+      </div>
+      
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <AssetsList />
+        <TransactionHistory />
       </div>
     </div>
   );
