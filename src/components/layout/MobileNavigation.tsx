@@ -13,6 +13,7 @@ const MobileNavigation = () => {
     { icon: Home, label: "Home", path: "/dashboard" },
     { icon: PieChart, label: "Portfolio", path: "/dashboard/portfolio" },
     { icon: Repeat, label: "P2P", path: "/dashboard/p2p" },
+    { icon: LayoutList, label: "Activities", path: "/dashboard/activities" },
     { icon: Send, label: "Transfer", path: "/dashboard/transfer" },
     { icon: Settings, label: "Settings", path: "/dashboard/settings" },
   ];

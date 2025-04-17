@@ -19,12 +19,12 @@ const Sidebar = () => {
   };
 
   const navItems = [
-    { icon: Home, label: "Home", path: "/" },
-    { icon: PieChart, label: "Portfolio", path: "/portfolio" },
-    { icon: Repeat, label: "P2P", path: "/p2p" },
-    { icon: LayoutList, label: "Activities", path: "/activities" },
-    { icon: Send, label: "Send/Receive", path: "/transfer" },
-    { icon: Settings, label: "Settings", path: "/settings" },
+    { icon: Home, label: "Home", path: "/dashboard" },
+    { icon: PieChart, label: "Portfolio", path: "/dashboard/portfolio" },
+    { icon: Repeat, label: "P2P", path: "/dashboard/p2p" },
+    { icon: LayoutList, label: "Activities", path: "/dashboard/activities" },
+    { icon: Send, label: "Send/Receive", path: "/dashboard/transfer" },
+    { icon: Settings, label: "Settings", path: "/dashboard/settings" },
   ];
 
   // Calculate total balance
@@ -38,7 +38,7 @@ const Sidebar = () => {
       transition={{ duration: 0.3 }}
     >
       <div className="p-6">
-        <Link to="/" className="flex items-center space-x-2">
+        <Link to="/dashboard" className="flex items-center space-x-2">
           <Wallet className="w-8 h-8 text-crypto-accent-blue" />
           <h1 className="text-xl font-bold crypto-gradient-text">CryptoFlow</h1>
         </Link>

@@ -42,7 +42,7 @@ const AssetsList = () => {
     <div className="glass-card rounded-xl overflow-hidden">
       <div className="p-4 border-b border-white/10 flex justify-between items-center">
         <h2 className="font-bold text-lg">My Wallets</h2>
-        <Link to="/portfolio" className="text-crypto-accent-blue text-sm flex items-center">
+        <Link to="/dashboard/portfolio" className="text-crypto-accent-blue text-sm flex items-center">
           View All
           <ChevronRight size={16} />
         </Link>
