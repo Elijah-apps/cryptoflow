@@ -1,5 +1,4 @@
-
-import { Home, PieChart, Send, LayoutList, Settings } from "lucide-react";
+import { Home, PieChart, Send, LayoutList, Settings, Repeat } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
 const MobileNavigation = () => {
@@ -12,8 +11,8 @@ const MobileNavigation = () => {
   const navItems = [
     { icon: Home, label: "Home", path: "/" },
     { icon: PieChart, label: "Portfolio", path: "/portfolio" },
+    { icon: Repeat, label: "P2P", path: "/p2p" },
     { icon: Send, label: "Transfer", path: "/transfer" },
-    { icon: LayoutList, label: "Activity", path: "/activities" },
     { icon: Settings, label: "Settings", path: "/settings" },
   ];
 
