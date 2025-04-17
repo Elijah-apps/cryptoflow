@@ -1,4 +1,3 @@
-
 import { ArrowUpRight, ChevronRight, Copy, Plus, Wallet } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -11,12 +10,16 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useAssets } from "@/hooks/useAssets";
 import { useUserProfile } from "@/hooks/useUserProfile";
+import { ShoppingCart, CreditCard } from "lucide-react";
+import TradingModal from "@/components/trading/TradingModal";
 
 const BalanceCard = () => {
   const { data: assets, isLoading: assetsLoading } = useAssets();
   const { data: userProfile, isLoading: profileLoading } = useUserProfile();
   const [showBalance, setShowBalance] = useState(true);
   const [selectedWallet, setSelectedWallet] = useState<string>("bitcoin");
+  const [isTradingModalOpen, setIsTradingModalOpen] = useState(false);
+  const [tradingType, setTradingType] = useState<"buy" | "sell">("buy");
 
   const toggleBalance = () => {
     setShowBalance(!showBalance);
@@ -49,6 +52,16 @@ const BalanceCard = () => {
       default:
         return <Wallet className="w-full h-full" />;
     }
+  };
+
+  const openBuyModal = () => {
+    setTradingType("buy");
+    setIsTradingModalOpen(true);
+  };
+
+  const openSellModal = () => {
+    setTradingType("sell");
+    setIsTradingModalOpen(true);
   };
 
   if (assetsLoading || profileLoading) {
@@ -178,14 +191,29 @@ const BalanceCard = () => {
           </>
         )}
         
+        {/* Replace the send/receive buttons with buy/sell */}
         <div className="mt-6 flex space-x-2">
-          <Link to="/transfer" className="action-button flex-1 bg-crypto-blue">
-            Send
-          </Link>
-          <Link to="/transfer?tab=receive" className="action-button flex-1 bg-crypto-purple">
-            Receive
-          </Link>
+          <button 
+            onClick={openBuyModal}
+            className="action-button flex-1 bg-crypto-purple hover:bg-crypto-purple/90"
+          >
+            <ShoppingCart size={16} className="mr-2" />
+            Buy
+          </button>
+          <button 
+            onClick={openSellModal} 
+            className="action-button flex-1 bg-crypto-blue hover:bg-crypto-blue/90"
+          >
+            <CreditCard size={16} className="mr-2" />
+            Sell
+          </button>
         </div>
+
+        <TradingModal 
+          isOpen={isTradingModalOpen}
+          onClose={() => setIsTradingModalOpen(false)}
+          initialTab={tradingType}
+        />
       </div>
     </div>
   );
