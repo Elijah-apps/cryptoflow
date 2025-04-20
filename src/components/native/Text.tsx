@@ -1,27 +1,15 @@
 
 import React from 'react';
-import { Text as RNText, StyleSheet } from 'react-native';
 
 interface TextProps {
   children: React.ReactNode;
-  style?: any;
+  style?: React.CSSProperties;
+  className?: string;
 }
 
-const Text = ({ children, style }: TextProps) => {
-  // For web
-  if (typeof window !== 'undefined') {
-    return <span style={style}>{children}</span>;
-  }
-
-  // For native platforms
-  return <RNText style={[styles.text, style]}>{children}</RNText>;
+const Text = ({ children, style, className }: TextProps) => {
+  // For web only - we're not actually using React Native in the browser
+  return <span style={style} className={className}>{children}</span>;
 };
-
-const styles = StyleSheet.create({
-  text: {
-    color: '#ffffff',
-    fontSize: 16,
-  },
-});
 
 export default Text;
