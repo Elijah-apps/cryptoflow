@@ -10,9 +10,10 @@ interface ButtonProps {
   variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link";
   className?: string;
   disabled?: boolean;
+  style?: any; // Add style prop
 }
 
-const Button = ({ children, onPress, variant = "default", className, disabled }: ButtonProps) => {
+const Button = ({ children, onPress, variant = "default", className, disabled, style }: ButtonProps) => {
   // For web, we'll use the existing button component
   if (typeof window !== 'undefined') {
     return (
@@ -33,7 +34,9 @@ const Button = ({ children, onPress, variant = "default", className, disabled }:
       style={[
         styles.button,
         variant === 'outline' && styles.outlineButton,
-        disabled && styles.disabled
+        variant === 'ghost' && styles.ghostButton,
+        disabled && styles.disabled,
+        style // Apply custom style
       ]}
       onPress={onPress}
       disabled={disabled}
@@ -41,6 +44,7 @@ const Button = ({ children, onPress, variant = "default", className, disabled }:
       <Text style={[
         styles.text,
         variant === 'outline' && styles.outlineText,
+        variant === 'ghost' && styles.ghostText,
         disabled && styles.disabledText
       ]}>
         {children}
@@ -63,6 +67,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#3b82f6',
   },
+  ghostButton: {
+    backgroundColor: 'transparent',
+  },
   disabled: {
     opacity: 0.5,
   },
@@ -73,6 +80,9 @@ const styles = StyleSheet.create({
   },
   outlineText: {
     color: '#3b82f6',
+  },
+  ghostText: {
+    color: '#6b7280',
   },
   disabledText: {
     color: '#9ca3af',

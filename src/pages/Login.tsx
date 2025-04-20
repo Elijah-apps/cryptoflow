@@ -1,13 +1,15 @@
-
 import { useState } from "react";
-import { View, StyleSheet } from "react-native";
+import { View as RNView, StyleSheet } from "react-native";
 import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff, Wallet, LockKeyhole, Mail } from "lucide-react";
 import Button from "@/components/native/Button";
 import Input from "@/components/native/Input";
+import Text from "@/components/native/Text";
 import { Label } from "@/components/ui/label";
 import { toast } from "@/components/ui/sonner";
 import { apiService } from "@/services/api/apiService";
+
+const View = typeof window !== 'undefined' ? 'div' : RNView;
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -16,8 +18,8 @@ const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleLogin = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
     
     if (!email || !password) {
       toast.error("Please enter both email and password");
@@ -86,7 +88,6 @@ const Login = () => {
               <Button
                 onPress={() => setShowPassword(!showPassword)}
                 variant="ghost"
-                style={styles.eyeButton}
               >
                 {showPassword ? <EyeOff /> : <Eye />}
               </Button>
@@ -96,7 +97,6 @@ const Login = () => {
           <Button
             onPress={handleLogin}
             disabled={isLoading}
-            style={styles.loginButton}
           >
             {isLoading ? "Signing in..." : "Sign in"}
           </Button>
@@ -182,10 +182,6 @@ const styles = StyleSheet.create({
   forgotPassword: {
     color: '#3b82f6',
     fontSize: 14,
-  },
-  eyeButton: {
-    position: 'absolute',
-    right: 12,
   },
   loginButton: {
     marginTop: 24,

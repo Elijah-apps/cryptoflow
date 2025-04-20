@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { TextInput, StyleSheet, View, Text } from 'react-native';
+import { TextInput, StyleSheet, View, Text as RNText } from 'react-native';
 import { Input as WebInput } from "@/components/ui/input";
 
 interface InputProps {
@@ -38,7 +38,7 @@ const Input = ({
   // For native platforms
   return (
     <View style={styles.container}>
-      {label && <Text style={styles.label}>{label}</Text>}
+      {label && <RNText style={styles.label}>{label}</RNText>}
       <TextInput
         style={styles.input}
         value={value}
