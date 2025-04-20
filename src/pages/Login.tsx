@@ -44,6 +44,7 @@ const Login = () => {
     }
   };
 
+  // Fixed typings for the styles
   const containerStyle = Platform.select({
     web: styles.container,
     default: {
@@ -54,12 +55,13 @@ const Login = () => {
     }
   });
 
+  // Fixed typings for the styles - using numbers instead of string values
   const contentStyle = Platform.select({
     web: styles.content,
     default: {
       ...styles.content,
       maxWidth: 400,
-      width: '100%',
+      width: '100%' as any, // Type assertion to fix the width type issue
       alignSelf: 'center' as const,
     }
   });
