@@ -60,7 +60,7 @@ const Login = () => {
       ...styles.content,
       maxWidth: 400,
       width: '100%',
-      alignSelf: 'center',
+      alignSelf: 'center' as const,
     }
   });
 
