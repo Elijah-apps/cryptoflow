@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { TextInput, Platform } from 'react-native';
 import { Input as WebInput } from "@/components/ui/input";
 
 interface InputProps {
@@ -10,6 +11,7 @@ interface InputProps {
   label?: string;
   className?: string;
   type?: string;
+  style?: any;
 }
 
 const Input = ({ 
@@ -19,16 +21,28 @@ const Input = ({
   secureTextEntry, 
   label,
   className,
-  type
+  type,
+  style
 }: InputProps) => {
-  // For web only - using the shadcn Input component
+  if (Platform.OS === 'web') {
+    return (
+      <WebInput
+        value={value}
+        onChange={(e) => onChangeText?.(e.target.value)}
+        placeholder={placeholder}
+        type={secureTextEntry ? 'password' : (type || 'text')}
+        className={className}
+      />
+    );
+  }
+
   return (
-    <WebInput
+    <TextInput
       value={value}
-      onChange={(e) => onChangeText?.(e.target.value)}
+      onChangeText={onChangeText}
       placeholder={placeholder}
-      type={secureTextEntry ? 'password' : (type || 'text')}
-      className={className}
+      secureTextEntry={secureTextEntry}
+      style={style}
     />
   );
 };

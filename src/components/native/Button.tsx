@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { TouchableOpacity, Platform } from 'react-native';
 import { Button as WebButton } from "@/components/ui/button";
 
 interface ButtonProps {
@@ -8,19 +9,31 @@ interface ButtonProps {
   variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link";
   className?: string;
   disabled?: boolean;
+  style?: any;
 }
 
-const Button = ({ children, onPress, variant = "default", className, disabled }: ButtonProps) => {
-  // For web only - using the shadcn Button component
+const Button = ({ children, onPress, variant = "default", className, disabled, style }: ButtonProps) => {
+  if (Platform.OS === 'web') {
+    return (
+      <WebButton 
+        onClick={onPress} 
+        variant={variant} 
+        className={className}
+        disabled={disabled}
+      >
+        {children}
+      </WebButton>
+    );
+  }
+
   return (
-    <WebButton 
-      onClick={onPress} 
-      variant={variant} 
-      className={className}
+    <TouchableOpacity
+      onPress={onPress}
       disabled={disabled}
+      style={style}
     >
       {children}
-    </WebButton>
+    </TouchableOpacity>
   );
 };
 

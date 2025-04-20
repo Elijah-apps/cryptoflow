@@ -1,5 +1,6 @@
+
 import { useState } from "react";
-import { View as RNView, StyleSheet } from "react-native";
+import { View, StyleSheet, Platform } from "react-native";
 import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff, Wallet, LockKeyhole, Mail } from "lucide-react";
 import Button from "@/components/native/Button";
@@ -8,8 +9,6 @@ import Text from "@/components/native/Text";
 import { Label } from "@/components/ui/label";
 import { toast } from "@/components/ui/sonner";
 import { apiService } from "@/services/api/apiService";
-
-const View = typeof window !== 'undefined' ? 'div' : RNView;
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -45,9 +44,29 @@ const Login = () => {
     }
   };
 
+  const containerStyle = Platform.select({
+    web: styles.container,
+    default: {
+      ...styles.container,
+      backgroundColor: '#0f172a',
+      flex: 1,
+      padding: 24,
+    }
+  });
+
+  const contentStyle = Platform.select({
+    web: styles.content,
+    default: {
+      ...styles.content,
+      maxWidth: 400,
+      width: '100%',
+      alignSelf: 'center',
+    }
+  });
+
   return (
-    <View style={styles.container}>
-      <View style={styles.content}>
+    <View style={containerStyle}>
+      <View style={contentStyle}>
         <View style={styles.header}>
           <View style={styles.iconContainer}>
             <Wallet style={styles.icon} />
@@ -98,7 +117,7 @@ const Login = () => {
             onPress={handleLogin}
             disabled={isLoading}
           >
-            {isLoading ? "Signing in..." : "Sign in"}
+            <Text>{isLoading ? "Signing in..." : "Sign in"}</Text>
           </Button>
 
           <View style={styles.signupContainer}>
